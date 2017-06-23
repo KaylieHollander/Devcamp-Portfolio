@@ -1,4 +1,4 @@
-class PortfoliosController < ApplicationController
+  class PortfoliosController < ApplicationController
   def index
     @portfolio_items = Portfolio.all
   end
@@ -21,4 +21,7 @@ def create
     end
 end
 
-end
+def edit
+  @portfolio_item = Portfolio.find(params[:id])
+end 
+  end
