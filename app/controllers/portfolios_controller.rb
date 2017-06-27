@@ -1,3 +1,4 @@
+ portfolio-feature
   class PortfoliosController < ApplicationController
   def index
     @portfolio_items = Portfolio.all
@@ -19,6 +20,7 @@ def create
         format.json { render json: @portfolio_item.errors, status: :unprocessable_entity }
       end
     end
+class PortfoliosController < ApplicationController master
 end
 
 def edit
