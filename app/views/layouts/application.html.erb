@@ -1,12 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Appname</title>
+    <title><%= @page_title %></title>
     <%= csrf_meta_tags %>
-
+    <meta name="keywords" content="<%= @seo_keywords %>" />
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
+
+  <div>
+    <div><%= link_to "Home Page", root_path %></div>
+    <div><%= link_to "About Page", about_me_path %></div>
+    <div><%= link_to "Contact Page", contact_path %></div>
+    <div><%= link_to "Blog Page", blogs_path %></div>
+    <div><%= link_to "Portfolio Page", portfolios_path %></div>
+  </div>
+
+
 
   <body>
     <p class="notice"><%= notice %></p>
