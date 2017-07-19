@@ -1,12 +1,7 @@
-GIT
-  remote: https://github.com/KaylieHollander/kaylie_view_tool
-  revision: ac43b93edda62dfd00c2703e751e0cceff7c386f
-  specs:
-    Kaylie_view_tool (0.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    Kaylie_view_tool (0.1.0)
     actioncable (5.0.3)
       actionpack (= 5.0.3)
       nio4r (>= 1.2, < 3.0)
@@ -189,7 +184,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Kaylie_view_tool!
+  Kaylie_view_tool (~> 0.1.0)
   bootstrap (~> 4.0.0.alpha6)
   byebug
   coffee-rails (~> 4.2)
