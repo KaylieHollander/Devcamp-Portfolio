@@ -17,4 +17,8 @@ module ApplicationHelper
     end
   end
   
+  def copyright_generator
+    KaylieViewTool::Renderer.copyright "Kaylie Hollander", "All rights reserved"
+  end
+  
 end

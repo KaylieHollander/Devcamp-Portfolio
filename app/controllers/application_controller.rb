@@ -6,11 +6,5 @@ class ApplicationController < ActionController::Base
   include CurrentUserConcern
   include DefaultPageContent
   
-  before_action :set_copyright
-  
-  def set_copyright
-    @copyright = KaylieViewTool::Renderer.copyright "Kaylie Hollander", "All rights reserved"
-  end
-  
 end
 
