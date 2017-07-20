@@ -11,19 +11,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <%= render "shared/nav", location: "top" %>
-
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    
-    <%= login_helper %>
-    
-    <%= yield %>
-    
-    <%= copyright_generator %>
-    
-    <%= source_helper("home page")%>
-    
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+            <%= render "shared/application_nav" %>
+            <%= login_helper %>
+            <%= yield %>
+            <%= copyright_generator %>
+            <%= source_helper("home page")%>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
