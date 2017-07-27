@@ -1,0 +1,2182 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION;
+CREATE ROLE ubuntu;
+ALTER ROLE ubuntu WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN NOREPLICATION;
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE "Appname_development" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "Appname_test" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "DevcampPortfolio_development" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "DevcampPortfolio_test" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "MyApp_development" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "MyApp_test" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE devcamp_portfolio_development WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE devcamp_portfolio_test WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "myProject_development" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "myProject_test" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "sample-project_development" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE "sample-project_test" WITH TEMPLATE = template0 OWNER = ubuntu ENCODING = 'UTF8';
+CREATE DATABASE ubuntu WITH TEMPLATE = template0 OWNER = ubuntu;
+
+
+\connect "Appname_development"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO ubuntu;
+
+--
+-- Name: blogs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE blogs (
+    id integer NOT NULL,
+    title character varying,
+    body text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying,
+    status integer DEFAULT 0,
+    topic_id integer
+);
+
+
+ALTER TABLE public.blogs OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE blogs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.blogs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE blogs_id_seq OWNED BY blogs.id;
+
+
+--
+-- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE friendly_id_slugs (
+    id integer NOT NULL,
+    slug character varying NOT NULL,
+    sluggable_id integer NOT NULL,
+    sluggable_type character varying(50),
+    scope character varying,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.friendly_id_slugs OWNER TO ubuntu;
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE friendly_id_slugs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.friendly_id_slugs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE friendly_id_slugs_id_seq OWNED BY friendly_id_slugs.id;
+
+
+--
+-- Name: portfolios; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE portfolios (
+    id integer NOT NULL,
+    title character varying,
+    subtitle character varying,
+    body text,
+    main_image text,
+    thumb_image text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.portfolios OWNER TO ubuntu;
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE portfolios_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.portfolios_id_seq OWNER TO ubuntu;
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE portfolios_id_seq OWNED BY portfolios.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: skills; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE skills (
+    id integer NOT NULL,
+    title character varying,
+    percent_utilized integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    badge text
+);
+
+
+ALTER TABLE public.skills OWNER TO ubuntu;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE skills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.skills_id_seq OWNER TO ubuntu;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE skills_id_seq OWNED BY skills.id;
+
+
+--
+-- Name: technologies; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE technologies (
+    id integer NOT NULL,
+    name character varying,
+    portfolio_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.technologies OWNER TO ubuntu;
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE technologies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.technologies_id_seq OWNER TO ubuntu;
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE technologies_id_seq OWNED BY technologies.id;
+
+
+--
+-- Name: topics; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE topics (
+    id integer NOT NULL,
+    title character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.topics OWNER TO ubuntu;
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.topics_id_seq OWNER TO ubuntu;
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    name character varying,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    roles character varying
+);
+
+
+ALTER TABLE public.users OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO ubuntu;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('friendly_id_slugs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY portfolios ALTER COLUMN id SET DEFAULT nextval('portfolios_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY skills ALTER COLUMN id SET DEFAULT nextval('skills_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY technologies ALTER COLUMN id SET DEFAULT nextval('technologies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY topics ALTER COLUMN id SET DEFAULT nextval('topics_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2017-06-14 14:53:32.466575	2017-06-14 14:53:32.466575
+\.
+
+
+--
+-- Data for Name: blogs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY blogs (id, title, body, created_at, updated_at, slug, status, topic_id) FROM stdin;
+5	My blog post 4	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.53343	2017-06-28 15:45:50.53343	my-blog-post-4	0	3
+6	My blog post 5	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.550718	2017-06-28 15:45:50.550718	my-blog-post-5	0	3
+7	My blog post 6	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.560641	2017-06-28 15:45:50.560641	my-blog-post-6	0	3
+8	My blog post 7	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.569349	2017-06-28 15:45:50.569349	my-blog-post-7	0	3
+9	My blog post 8	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.580505	2017-06-28 15:45:50.580505	my-blog-post-8	0	3
+4	My blog post 3	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.522747	2017-07-25 16:10:20.349739	my-blog-post-3	0	3
+12	Hellooo	Some random crap	2017-07-26 21:45:48.655721	2017-07-26 21:45:48.655721	hellooo	0	\N
+2	My blog post 1	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \r\n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \r\n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \r\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \r\n    laborum.	2017-06-28 15:45:50.505638	2017-07-19 20:41:46.613034	my-blog-post-1	0	3
+3	My blog post 2	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.51514	2017-07-19 20:48:32.704416	my-blog-post-2	0	3
+13	Hili	More random crap	2017-07-26 21:46:04.418772	2017-07-26 21:46:04.418772	hili	0	\N
+10	My blog post 9	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	2017-06-28 15:45:50.588964	2017-07-25 16:10:09.352667	my-blog-post-9	0	3
+14	Yo-Yo	Yo-Yo	2017-07-26 21:46:20.165896	2017-07-26 21:46:20.165896	yo-yo	0	\N
+\.
+
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('blogs_id_seq', 14, true);
+
+
+--
+-- Data for Name: friendly_id_slugs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY friendly_id_slugs (id, slug, sluggable_id, sluggable_type, scope, created_at) FROM stdin;
+\.
+
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('friendly_id_slugs_id_seq', 1, false);
+
+
+--
+-- Data for Name: portfolios; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY portfolios (id, title, subtitle, body, main_image, thumb_image, created_at, updated_at) FROM stdin;
+5	Portfolio title: 4	Ruby on Rails	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.690731	2017-06-28 15:45:50.690731
+6	Portfolio title: 5	Ruby on Rails	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.69553	2017-06-28 15:45:50.69553
+7	Portfolio title: 6	Ruby on Rails	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.700144	2017-06-28 15:45:50.700144
+8	Portfolio title: 7	Ruby on Rails	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.705096	2017-06-28 15:45:50.705096
+9	Portfolio title: 0	Angular	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.711653	2017-06-28 15:45:50.711653
+10	Web app	asdf	asdf	http://via.placeholder.com/600x400	http://via.placeholder.com/350x200	2017-06-28 19:02:36.897759	2017-06-28 19:02:36.897759
+11	This is an amazing title	add	A quick brown fox jumps over the lazy dog	http://via.placeholder.com/600x400	http://via.placeholder.com/350x200	2017-06-28 20:00:09.972588	2017-06-28 20:00:09.972588
+1	Portfolio title: 0	Ruby on Rails and Panda	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \r\n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \r\n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \r\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \r\n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.666699	2017-07-04 01:52:24.636908
+2	Portfolio title: 1	Ruby on Rails and Panda	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \r\n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \r\n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \r\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \r\n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.673579	2017-07-04 01:52:41.067856
+3	Portfolio title: 2	Ruby on Rails and Panda	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \r\n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \r\n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \r\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \r\n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.680396	2017-07-04 01:53:10.861924
+12	adf	adfs	asdf	http://via.placeholder.com/600x400	http://via.placeholder.com/350x200	2017-07-04 01:54:36.830621	2017-07-04 01:54:36.830621
+4	Portfolio title: 3	Ruby on Rails	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \r\n    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea \r\n    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla \r\n    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est \r\n    laborum.	http://via.placeholder.com/600x400	http://via.placeholder.com/350x250	2017-06-28 15:45:50.686209	2017-07-10 14:35:03.756947
+\.
+
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('portfolios_id_seq', 12, true);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY schema_migrations (version) FROM stdin;
+20170614145415
+20170619162705
+20170619172656
+20170626151645
+20170626152355
+20170626171724
+20170627173253
+20170627173615
+20170628144136
+20170628151505
+20170628214441
+20170719165331
+\.
+
+
+--
+-- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY skills (id, title, percent_utilized, created_at, updated_at, badge) FROM stdin;
+1	Rails 0	15	2017-06-28 15:45:50.616662	2017-06-28 15:45:50.616662	http://via.placeholder.com/250x250
+2	Rails 1	15	2017-06-28 15:45:50.625006	2017-06-28 15:45:50.625006	http://via.placeholder.com/250x250
+3	Rails 2	15	2017-06-28 15:45:50.631265	2017-06-28 15:45:50.631265	http://via.placeholder.com/250x250
+4	Rails 3	15	2017-06-28 15:45:50.636698	2017-06-28 15:45:50.636698	http://via.placeholder.com/250x250
+5	Rails 4	15	2017-06-28 15:45:50.641996	2017-06-28 15:45:50.641996	http://via.placeholder.com/250x250
+\.
+
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('skills_id_seq', 5, true);
+
+
+--
+-- Data for Name: technologies; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY technologies (id, name, portfolio_id, created_at, updated_at) FROM stdin;
+1	Ruby	10	2017-06-28 19:02:36.90455	2017-06-28 19:02:36.90455
+2	Rails	10	2017-06-28 19:02:36.908438	2017-06-28 19:02:36.908438
+3	Angular	10	2017-06-28 19:02:36.911391	2017-06-28 19:02:36.911391
+4	Ionic	10	2017-06-28 19:02:36.913764	2017-06-28 19:02:36.913764
+5	Hi	11	2017-06-28 20:00:10.037039	2017-06-28 20:00:10.037039
+6	Panda	11	2017-06-28 20:00:10.04297	2017-06-28 20:00:10.04297
+7	Test	11	2017-06-28 20:00:10.046225	2017-06-28 20:00:10.046225
+8	add 	12	2017-07-04 01:54:36.83336	2017-07-04 01:54:36.83336
+9	asdf	12	2017-07-04 01:54:36.848933	2017-07-04 01:54:36.848933
+10	 eawfdvs 	12	2017-07-04 01:54:36.850844	2017-07-04 01:54:36.850844
+\.
+
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('technologies_id_seq', 10, true);
+
+
+--
+-- Data for Name: topics; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY topics (id, title, created_at, updated_at) FROM stdin;
+1	Topic 0	2017-06-28 15:45:50.308971	2017-06-28 15:45:50.308971
+2	Topic 1	2017-06-28 15:45:50.315921	2017-06-28 15:45:50.315921
+3	Topic 2	2017-06-28 15:45:50.320964	2017-06-28 15:45:50.320964
+\.
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('topics_id_seq', 3, true);
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY users (id, email, encrypted_password, name, reset_password_token, reset_password_sent_at, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, created_at, updated_at, roles) FROM stdin;
+3	test@gmail.com	$2a$11$yc0HPfEPwqiebuZnhL/0pO5NRWb6MFMzhgr517g8GMk2E2uqGFa/y	Panda	\N	\N	\N	1	2017-06-29 14:58:54.047852	2017-06-29 14:58:54.047852	10.240.1.32	10.240.1.32	2017-06-29 14:58:54.039697	2017-06-29 14:59:19.476787	\N
+1	test@email.com	$2a$11$e1Mccs.TVHPOY9ecM5y9dOTEwcIGJ2cB0sxpWh2eW9zFIaeQG9Tzq	\N	\N	\N	\N	2	2017-07-04 02:51:03.558135	2017-06-28 22:12:26.295193	10.240.1.32	10.240.1.15	2017-06-28 22:12:26.287903	2017-07-04 02:51:03.560588	\N
+4	pandaman's@email.com	$2a$11$IdoUonBybVZttUBM.0PiMeWe/peBvanKt7KQMCtfxznYKE76ycWZ6	Panda Man	\N	\N	\N	1	2017-07-04 17:38:35.9597	2017-07-04 17:38:35.9597	10.240.1.32	10.240.1.32	2017-07-04 17:38:35.95028	2017-07-04 17:38:35.961341	\N
+5	siteadmin@email.com	$2a$11$sNJtoNz3URqplPS/RDeWW.1QswVcBl5AMFBhmMLVh.fTx6tGB1Sqa	Kaylie Hollander	\N	\N	\N	11	2017-07-27 15:55:47.936306	2017-07-26 17:25:16.708706	10.240.1.60	10.240.0.204	2017-07-19 20:33:38.03774	2017-07-27 15:55:47.940286	site_admin
+\.
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('users_id_seq', 5, true);
+
+
+--
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY friendly_id_slugs
+    ADD CONSTRAINT friendly_id_slugs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY portfolios
+    ADD CONSTRAINT portfolios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: skills_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: technologies_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY technologies
+    ADD CONSTRAINT technologies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_blogs_on_slug; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_blogs_on_slug ON blogs USING btree (slug);
+
+
+--
+-- Name: index_blogs_on_topic_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_blogs_on_topic_id ON blogs USING btree (topic_id);
+
+
+--
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type ON friendly_id_slugs USING btree (slug, sluggable_type);
+
+
+--
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope ON friendly_id_slugs USING btree (slug, sluggable_type, scope);
+
+
+--
+-- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON friendly_id_slugs USING btree (sluggable_id);
+
+
+--
+-- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USING btree (sluggable_type);
+
+
+--
+-- Name: index_technologies_on_portfolio_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_technologies_on_portfolio_id ON technologies USING btree (portfolio_id);
+
+
+--
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+
+
+--
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
+
+
+--
+-- Name: fk_rails_7f5637ea0d; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT fk_rails_7f5637ea0d FOREIGN KEY (topic_id) REFERENCES topics(id);
+
+
+--
+-- Name: fk_rails_cc5ab4a1c3; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY technologies
+    ADD CONSTRAINT fk_rails_cc5ab4a1c3 FOREIGN KEY (portfolio_id) REFERENCES portfolios(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "Appname_test"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO ubuntu;
+
+--
+-- Name: blogs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE blogs (
+    id integer NOT NULL,
+    title character varying,
+    body text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying,
+    status integer DEFAULT 0,
+    topic_id integer
+);
+
+
+ALTER TABLE public.blogs OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE blogs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.blogs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE blogs_id_seq OWNED BY blogs.id;
+
+
+--
+-- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE friendly_id_slugs (
+    id integer NOT NULL,
+    slug character varying NOT NULL,
+    sluggable_id integer NOT NULL,
+    sluggable_type character varying(50),
+    scope character varying,
+    created_at timestamp without time zone
+);
+
+
+ALTER TABLE public.friendly_id_slugs OWNER TO ubuntu;
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE friendly_id_slugs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.friendly_id_slugs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE friendly_id_slugs_id_seq OWNED BY friendly_id_slugs.id;
+
+
+--
+-- Name: portfolios; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE portfolios (
+    id integer NOT NULL,
+    title character varying,
+    subtitle character varying,
+    body text,
+    main_image text,
+    thumb_image text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.portfolios OWNER TO ubuntu;
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE portfolios_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.portfolios_id_seq OWNER TO ubuntu;
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE portfolios_id_seq OWNED BY portfolios.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: skills; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE skills (
+    id integer NOT NULL,
+    title character varying,
+    percent_utilized integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    badge text
+);
+
+
+ALTER TABLE public.skills OWNER TO ubuntu;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE skills_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.skills_id_seq OWNER TO ubuntu;
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE skills_id_seq OWNED BY skills.id;
+
+
+--
+-- Name: technologies; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE technologies (
+    id integer NOT NULL,
+    name character varying,
+    portfolio_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.technologies OWNER TO ubuntu;
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE technologies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.technologies_id_seq OWNER TO ubuntu;
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE technologies_id_seq OWNED BY technologies.id;
+
+
+--
+-- Name: topics; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE topics (
+    id integer NOT NULL,
+    title character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.topics OWNER TO ubuntu;
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE topics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.topics_id_seq OWNER TO ubuntu;
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('friendly_id_slugs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY portfolios ALTER COLUMN id SET DEFAULT nextval('portfolios_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY skills ALTER COLUMN id SET DEFAULT nextval('skills_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY technologies ALTER COLUMN id SET DEFAULT nextval('technologies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY topics ALTER COLUMN id SET DEFAULT nextval('topics_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2017-06-20 15:32:27.856124	2017-06-20 15:32:27.856124
+\.
+
+
+--
+-- Data for Name: blogs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY blogs (id, title, body, created_at, updated_at, slug, status, topic_id) FROM stdin;
+\.
+
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('blogs_id_seq', 1, false);
+
+
+--
+-- Data for Name: friendly_id_slugs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY friendly_id_slugs (id, slug, sluggable_id, sluggable_type, scope, created_at) FROM stdin;
+\.
+
+
+--
+-- Name: friendly_id_slugs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('friendly_id_slugs_id_seq', 1, false);
+
+
+--
+-- Data for Name: portfolios; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY portfolios (id, title, subtitle, body, main_image, thumb_image, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: portfolios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('portfolios_id_seq', 1, false);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY schema_migrations (version) FROM stdin;
+20170619172656
+20170614145415
+20170619162705
+20170627173615
+20170626171724
+20170627173253
+20170626151645
+20170626152355
+20170628151505
+20170628144136
+\.
+
+
+--
+-- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY skills (id, title, percent_utilized, created_at, updated_at, badge) FROM stdin;
+\.
+
+
+--
+-- Name: skills_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('skills_id_seq', 1, false);
+
+
+--
+-- Data for Name: technologies; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY technologies (id, name, portfolio_id, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: technologies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('technologies_id_seq', 1, false);
+
+
+--
+-- Data for Name: topics; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY topics (id, title, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: topics_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('topics_id_seq', 1, false);
+
+
+--
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY friendly_id_slugs
+    ADD CONSTRAINT friendly_id_slugs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY portfolios
+    ADD CONSTRAINT portfolios_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: skills_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: technologies_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY technologies
+    ADD CONSTRAINT technologies_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY topics
+    ADD CONSTRAINT topics_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_blogs_on_slug; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_blogs_on_slug ON blogs USING btree (slug);
+
+
+--
+-- Name: index_blogs_on_topic_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_blogs_on_topic_id ON blogs USING btree (topic_id);
+
+
+--
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type ON friendly_id_slugs USING btree (slug, sluggable_type);
+
+
+--
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope ON friendly_id_slugs USING btree (slug, sluggable_type, scope);
+
+
+--
+-- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON friendly_id_slugs USING btree (sluggable_id);
+
+
+--
+-- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USING btree (sluggable_type);
+
+
+--
+-- Name: index_technologies_on_portfolio_id; Type: INDEX; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE INDEX index_technologies_on_portfolio_id ON technologies USING btree (portfolio_id);
+
+
+--
+-- Name: fk_rails_7f5637ea0d; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT fk_rails_7f5637ea0d FOREIGN KEY (topic_id) REFERENCES topics(id);
+
+
+--
+-- Name: fk_rails_cc5ab4a1c3; Type: FK CONSTRAINT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY technologies
+    ADD CONSTRAINT fk_rails_cc5ab4a1c3 FOREIGN KEY (portfolio_id) REFERENCES portfolios(id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "DevcampPortfolio_development"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO ubuntu;
+
+--
+-- Name: blogs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE blogs (
+    id integer NOT NULL,
+    title character varying,
+    body text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.blogs OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE blogs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.blogs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE blogs_id_seq OWNED BY blogs.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2017-06-13 16:48:07.416396	2017-06-13 16:48:07.416396
+\.
+
+
+--
+-- Data for Name: blogs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY blogs (id, title, body, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('blogs_id_seq', 1, false);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY schema_migrations (version) FROM stdin;
+20170613165821
+\.
+
+
+--
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "DevcampPortfolio_test"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "MyApp_development"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "MyApp_test"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect devcamp_portfolio_development
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect devcamp_portfolio_test
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "myProject_development"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect "myProject_test"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect postgres
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect -reuse-previous=on "dbname='sample-project_development'"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.ar_internal_metadata OWNER TO ubuntu;
+
+--
+-- Name: blogs; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE blogs (
+    id integer NOT NULL,
+    title character varying,
+    body text,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.blogs OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE; Schema: public; Owner: ubuntu
+--
+
+CREATE SEQUENCE blogs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.blogs_id_seq OWNER TO ubuntu;
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ubuntu
+--
+
+ALTER SEQUENCE blogs_id_seq OWNED BY blogs.id;
+
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO ubuntu;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: ubuntu
+--
+
+ALTER TABLE ONLY blogs ALTER COLUMN id SET DEFAULT nextval('blogs_id_seq'::regclass);
+
+
+--
+-- Data for Name: ar_internal_metadata; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY ar_internal_metadata (key, value, created_at, updated_at) FROM stdin;
+environment	development	2016-12-30 17:36:59.248625	2016-12-30 17:36:59.248625
+\.
+
+
+--
+-- Data for Name: blogs; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY blogs (id, title, body, created_at, updated_at) FROM stdin;
+\.
+
+
+--
+-- Name: blogs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ubuntu
+--
+
+SELECT pg_catalog.setval('blogs_id_seq', 1, false);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: ubuntu
+--
+
+COPY schema_migrations (version) FROM stdin;
+20161230173652
+\.
+
+
+--
+-- Name: ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: blogs_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY blogs
+    ADD CONSTRAINT blogs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: ubuntu; Tablespace: 
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect -reuse-previous=on "dbname='sample-project_test'"
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect ubuntu
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
