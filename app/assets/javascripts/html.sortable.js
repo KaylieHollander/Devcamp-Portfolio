@@ -633,7 +633,7 @@ var sortable = function (sortableElements, options) {
         startparent: startParent
       }))
       if (index !== _index(dragging) || startParent !== newParent) {
-        _dispatchEventOnConnected(sortableElement, _makeEvent('sortupdate', {
+        _dispatchEventOnConnected(Element, _makeEvent('sortupdate', {
           item: dragging,
           index: _filter(_getChildren(newParent), _data(newParent, 'items'))
               .indexOf(dragging),
@@ -650,11 +650,11 @@ var sortable = function (sortableElements, options) {
       dragging = null
       draggingHeight = null
     })
-    // Handle drop event on sortable & placeholder
+    // Handle drop event on  & placeholder
     // TODO: REMOVE placeholder?????
-    _on([sortableElement, placeholder], 'drop', function (e) {
+    _on([Element, placeholder], 'drop', function (e) {
       var visiblePlaceholder
-      if (!_listsConnected(sortableElement, dragging.parentElement)) {
+      if (!_listsConnected(Element, dragging.parentElement)) {
         return
       }
 
@@ -721,7 +721,7 @@ var sortable = function (sortableElements, options) {
 
     // Handle dragover and dragenter events on draggable items
     var onDragOverEnter = function (e) {
-      if (!dragging || !_listsConnected(sortableElement, dragging.parentElement) || _data(sortableElement, '_disabled') === 'true') {
+      if (!dragging || !_listsConnected(Element, dragging.parentElement) || _data(sortableElement, '_disabled') === 'true') {
         return
       }
       if (maxItems && _filter(_getChildren(sortableElement), _data(sortableElement, 'items')).length >= maxItems) {
