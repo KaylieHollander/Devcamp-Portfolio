@@ -1,0 +1,48 @@
+/*
+Error: Invalid CSS after "...-color: $border": expected ";", was ":  red;;"
+        on line 5 of /home/ubuntu/workspace/Devcamp/app/assets/stylesheets/pages.scss
+
+1: 
+2: 
+3: 
+4: .border {
+5:  border-color: $border:  red;;
+6: }
+
+Backtrace:
+/home/ubuntu/workspace/Devcamp/app/assets/stylesheets/pages.scss:5
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:1207:in `expected'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:1137:in `expected'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:1132:in `tok!'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:786:in `block in try_declaration'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:1183:in `rethrow'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:791:in `try_declaration'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:720:in `declaration_or_ruleset'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:685:in `block_child'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:674:in `block_contents'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:666:in `block'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:658:in `ruleset'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:684:in `block_child'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:674:in `block_contents'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:125:in `stylesheet'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/scss/parser.rb:41:in `parse'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/engine.rb:406:in `_to_tree'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/engine.rb:381:in `_render_with_sourcemap'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/engine.rb:298:in `render_with_sourcemap'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:209:in `each'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/plugin.rb:82:in `update_stylesheets'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/exec/sass_scss.rb:340:in `watch_or_update'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/exec/sass_scss.rb:51:in `process_result'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/exec/base.rb:52:in `parse'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/lib/sass/exec/base.rb:19:in `parse!'
+/usr/local/rvm/gems/ruby-2.4.0/gems/sass-3.4.24/bin/scss:13:in `<top (required)>'
+/usr/local/rvm/gems/ruby-2.4.0/bin/scss:22:in `load'
+/usr/local/rvm/gems/ruby-2.4.0/bin/scss:22:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"...-color: $border\": expected \";\", was \":  red;;\"\A         on line 5 of /home/ubuntu/workspace/Devcamp/app/assets/stylesheets/pages.scss\A \A 1: \A 2: \A 3: \A 4: .border {\A 5:  border-color: $border:  red;;\A 6: }"; }
