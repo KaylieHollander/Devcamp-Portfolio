@@ -10,12 +10,28 @@
         <%= f.label :subtitle %>
         <%= f.text_field :subtitle, class: 'form-control' %>
       </div>
+      
+      <div class="form-group">
+        <%= f.label :body %>
+        <%= f.text_area :body, class: 'form-control', rows: 13 %>
+      </div>
     </div>
 
     <div class="col-md-6">
       <div class="form-group">
-        <%= f.label :body %>
-        <%= f.text_area :body, class: 'form-control', rows: 13 %>
+        
+        <label class="btn btn-success">
+          Upload a Main Image file <%= f.file_field :main_image, style:'display:none;' %>
+        </label>
+        
+      </div>
+      
+      <div class="form-group">
+        
+        <label class="btn btn-success">
+        Upload a Thumb Image file<%= f.file_field :thumb_image, style:'display:none;' %>
+        </label>
+        
       </div>
     </div>
   </div>
