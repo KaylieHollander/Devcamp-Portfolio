@@ -74,3 +74,5 @@ gem 'mini_magick', '~> 4.8'
 gem 'dotenv-rails', '~> 2.1', '>= 2.1.2'
 
 gem 'cocoon', '~> 1.2', '>= 1.2.10'
+
+gem 'gritter', '~> 1.2'
