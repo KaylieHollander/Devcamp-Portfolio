@@ -20,7 +20,8 @@ module ApplicationHelper
   def copyright_generator
     KaylieViewTool::Renderer.copyright "Kaylie Hollander", "All rights reserved"
   end
-  
+ 
+
   def nav_items
     [
       {
@@ -43,8 +44,14 @@ module ApplicationHelper
         url: portfolios_path,
         title: 'Portfolio'
       },
+      {
+        url: tech_news_path,
+        title: 'Science News'
+      },
     ]
-  end
+  end  
+
+
 
   def nav_helper style, tag_type
     nav_links = ' '
