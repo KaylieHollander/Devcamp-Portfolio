@@ -239,3 +239,16 @@ body {
 .cover-heading {
   padding-top: 5px;
 }
+
+.app-card-container {
+  color: black;
+  text-align: left;
+}
+
+.app-card-container > .card {
+  padding: 40px;
+}
+
+.app-card-container a {
+  color: blue;
+}
