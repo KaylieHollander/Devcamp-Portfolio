@@ -53,6 +53,7 @@ class PortfoliosController < ApplicationController
 
   def destroy
     # Destroy/delete the record
+    Technology.where(portfolio_id: @portfolio_item.id).delete_all
     @portfolio_item.destroy
 
     # Redirect

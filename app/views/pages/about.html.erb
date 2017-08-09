@@ -1,21 +1,66 @@
-<h1>About Page</h1>
-
-<hr>
-
-<div class="row">
-  <div class="col-md-3", class="border">
-    <%= image_tag "http://elelur.com/data_images/mammals/llama/llama-02.jpg", class:"pic-border", width: 300, height: 350, alt: "Profile Image" %>
-    </p>This is an Llama</p>
-  </div>
-  
-  <div class="col-md-6">
-    </p>This is an alpaca</p>
-  </div>
-  
-  <div class="col-md-3">
-    <%= image_tag "http://www.trussvilletribune.com/wp-content/uploads/2016/08/alpaca-.jpg", class:"pic-border", width: 300, height: 335, alt: "Profile Image" %>
-    </p>This is an Alpaca</p>
+<div class="app-card-container">
+  <div class="card">
+    <h1>About Page</h1>
+    
+    <hr>
+    
+    <div class="row">
+      <div class="col-md-6", class="border">
+        <%= image_tag "http://www.trussvilletribune.com/wp-content/uploads/2016/08/alpaca-.jpg", class:"pic-border", width: 300, height: 335, alt: "Profile Image" %>
+      </div>
+      
+      <div class="col-md-6">
+        </p>
+        This is an alpaca
+        </p>
+        
+         <p>
+           <button
+             class="btn btn-primary"
+             type="button"
+             data-toggle="collapse"
+             data-target="#jobHistory"
+             aria-expanded="false"
+             aria-controler="jobHistory"
+           >
+             Job History
+           </button>
+ 
+           <button
+             class="btn btn-primary"
+             type="button"
+             data-toggle="collapse"
+             data-target="#education"
+             aria-expanded="false"
+             aria-controler="education"
+           >
+             Education
+           </button>
+         </p>
+ 
+         <p>
+           <div class="collapse" id="jobHistory">
+             <div class="card card-block">
+               Job 1
+             </div>
+             <div class="card card-block">
+               Job 2
+             </div>
+           </div>
+ 
+           <div class="collapse" id="education">
+             <div class="card card-block">
+               School 1
+             </div>
+             <div class="card card-block">
+               School 2
+             </div>
+             <div class="card card-block">
+               School 3
+             </div>
+           </div>
+         </p>
+      </div>
+    </div>
   </div>
 </div>
-
-

@@ -12,7 +12,7 @@
 }
 
 body {
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: 'Indie Flower', cursive;
   color: #555;
 }
 
@@ -22,7 +22,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: normal;
   color: #333;
 }
@@ -172,4 +172,13 @@ h6, .h6 {
 
 .social-helper li a {
   font-size: 1.5em;
+}
+
+.blogcrumb a {
+  font-size: 1.25em;
+  margin: 0px 10px 0px 10px;
+}
+
+.blog-nav {
+  margin-bottom: 30px;
 }
